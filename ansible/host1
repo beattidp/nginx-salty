@@ -1,0 +1,1 @@
+ubu05 ansible_host="192.168.0.166" admin_ip="172.16.0.166" ansible_user="ubuntu" ansible_python_interpreter=/usr/bin/python3

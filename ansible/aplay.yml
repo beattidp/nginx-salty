@@ -1,0 +1,18 @@
+---
+
+- hosts: ubu05
+
+  pre_tasks:
+
+  - name: Add host declaration for Salt Master
+    lineinfile:
+      state: present
+      path: "/etc/hosts"
+      line: "192.168.0.165 salt"
+      regexp: ".*salt$"
+    become: yes
+
+  - name: Install the Salt Minion
+    apt:
+      name: salt-minion
+      state: present
