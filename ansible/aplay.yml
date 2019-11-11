@@ -12,6 +12,14 @@
       regexp: ".*salt$"
     become: yes
 
+  - name: Add host declaration for Salt Master
+    lineinfile:
+      state: present
+      path: "/etc/hosts"
+      line: "192.168.0.166 www.example.com"
+      regexp: ".*www\\.example\\.com$"
+    become: yes
+
   - name: Install the Salt Minion
     apt:
       name: salt-minion

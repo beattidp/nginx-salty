@@ -1,10 +1,45 @@
+{%- set interface = 'net0' if salt['grains.get']('env') == 'prod'
+    else 'net1' -%}
+{%- set addr = salt['network.interface_ip'](interface) -%}
+
+  upstream local_backend {
+    server localhost:3400 fail_timeout=0;
+  }
+
+  server {
+    if ($host != www.example.com) {
+            return 404;
+    }
+    # listen www.example.com:3200;
+    listen {{ addr }}:3200;
+
+    location / {
+      proxy_pass http://local_backend;
+    }
+
+    error_page  404  /404.html;
+    location = /404.html {
+      root /usr/share/nginx/html;
+      local;
+    }
+
+  }
+
+
 server {
+  if ($host != www.example.com) {
+    return 404;
+  }
+
   listen 80 default_server;
-  listen [::]:80 default_server;
+  # listen [::]:80 default_server;
+
   root /var/www/html;
   index index.html index.htm index.nginx-debian.html;
   server_name _;
+
   location / {
-    try_files $uri $uri/ =404;
+    =404;
   }
+
 }
