@@ -10,7 +10,7 @@
     if ($host != www.example.com) {
             return 404;
     }
-    # listen www.example.com:3200;
+    server_name www.example.com;
     listen {{ addr }}:3200;
 
     location / {
@@ -20,7 +20,7 @@
     error_page  404  /404.html;
     location = /404.html {
       root /usr/share/nginx/html;
-      local;
+      # local;
     }
 
   }
@@ -38,8 +38,8 @@ server {
   index index.html index.htm index.nginx-debian.html;
   server_name _;
 
-  location / {
-    =404;
-  }
+  # location / {
+  #   =404;
+  # }
 
 }
